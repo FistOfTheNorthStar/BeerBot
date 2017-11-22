@@ -3,7 +3,9 @@
 Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
 #include <NewPing.h>
 
-//max pulse 4096
+//rotation speed
+#define ROTATION_SPEED 5
+
 //main motors for the ROBOT
 #define LOWER_MAIN_LIFT 6
 #define UPPER_MAIN_LIFT 7
@@ -16,6 +18,10 @@ uint16_t currentPos_ROTATE_DISC = 375;
 uint16_t newPos_ROTATE_DISC = 375;
 // 0 for stay put, 1 rotate
 byte move_ROTATE_DISC = 0;
+byte move_ARM1 = 0;
+byte move_HAND1 = 0;
+byte move_OPENER = 0;
+byte move_LOWER_MAIN_LIFT = 0;
 
 //MG995
 #define ARM_1 11
@@ -31,9 +37,7 @@ void setup() {
   Serial.begin(9600);
   
   pwm.begin();
-  
-  pwm.setPWMFreq(60);  // Analog servos run at ~60 Hz updates
-
+  pwm.setPWMFreq(60);  // 60Hz seems to be working
   yield();
 
 }
@@ -45,7 +49,41 @@ void loop() {
   } else if(move_ROTATE_DISC == 1 && currentPos_ROTATE_DISC > newPos_ROTATE_DISC){
     
   }
-  
+
+  //disc rotating
+  if(move_ROTATE_DISC == 1 && currentPos_ROTATE_DISC < newPos_ROTATE_DISC){
+     
+  } else if(move_ROTATE_DISC == 1 && currentPos_ROTATE_DISC > newPos_ROTATE_DISC){
+    
+  }
+
+  //disc rotating
+  if(move_ROTATE_DISC == 1 && currentPos_ROTATE_DISC < newPos_ROTATE_DISC){
+     
+  } else if(move_ROTATE_DISC == 1 && currentPos_ROTATE_DISC > newPos_ROTATE_DISC){
+    
+  }
+
+  //disc rotating
+  if(move_ROTATE_DISC == 1 && currentPos_ROTATE_DISC < newPos_ROTATE_DISC){
+     
+  } else if(move_ROTATE_DISC == 1 && currentPos_ROTATE_DISC > newPos_ROTATE_DISC){
+    
+  }
+
+  //disc rotating
+  if(move_ROTATE_DISC == 1 && currentPos_ROTATE_DISC < newPos_ROTATE_DISC){
+     
+  } else if(move_ROTATE_DISC == 1 && currentPos_ROTATE_DISC > newPos_ROTATE_DISC){
+    
+  }
+
+  //disc rotating
+  if(move_ROTATE_DISC == 1 && currentPos_ROTATE_DISC < newPos_ROTATE_DISC){
+     
+  } else if(move_ROTATE_DISC == 1 && currentPos_ROTATE_DISC > newPos_ROTATE_DISC){
+    
+  }
   
   if(Serial.available()){
     int f = Serial.parseInt();
@@ -76,7 +114,7 @@ void loop() {
 void rotateDown(uint16_t &newPos, uint16_t &currentPos, int motor_number) {
   for (currentPos; currentPos >= newPos; currentPos--) {
     pwm.setPWM(motor_number, 0, currentPos);
-    delay(ROTATE_DISC_SPEED);
+    delay(ROTATION_SPEED);
     if (currentPos == newPos){
       currentPos = newPos;
     }
@@ -87,7 +125,7 @@ void rotateDown(uint16_t &newPos, uint16_t &currentPos, int motor_number) {
 void rotateUp(uint16_t &newPos, uint16_t &currentPos, int motor_number) {
   for (currentPos; currentPos <= newPos; currentPos++) {
     pwm.setPWM(motor_number, 0, currentPos);
-    delay(ROTATE_DISC_SPEED);
+    delay(ROTATION_SPEED);
     if (currentPos == newPos){
       currentPos = newPos;
     }
