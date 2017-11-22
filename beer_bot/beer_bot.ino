@@ -43,37 +43,11 @@ void setup() {
   yield();
 
 }
-
-/*
-void setServoPulse(uint8_t n, double pulse) {
-  double pulselength;
-  
-  pulselength = 1000000;   // 1,000,000 us per second
-  pulselength /= 60;   // 60 Hz
-  Serial.print(pulselength); Serial.println(" us per period"); 
-  pulselength /= 4096;  // 12 bits of resolution
-  Serial.print(pulselength); Serial.println(" us per bit"); 
-  pulse *= 1000;
-  pulse /= pulselength;
-  Serial.println(pulse);
-  pwm.setPWM(n, 0, pulse);
-}
-*/
-
 void loop() {
-  //Serial.println(servonum);
-
-
+ 
   //disc rotating
   if(move_ROTATE_DISC == 1 && currentPos_ROTATE_DISC < newPos_ROTATE_DISC){
-    for (currentPos_ROTATE_DISC; currentPos_ROTATE_DISC <= newPos_ROTATE_DISC; currentPos_ROTATE_DISC++) {
-      pwm.setPWM(ROTATE_DISC, 0, currentPos_ROTATE_DISC);
-      delay(ROTATE_DISC_SPEED);
-      if (currentPos_ROTATE_DISC == newPos_ROTATE_DISC){
-        currentPos_ROTATE_DISC = newPos_ROTATE_DISC;
-      }
-    }
-  } else if(move_ROTATE_DISC == 1 && currentPos_ROTATE_DISC > newPos_ROTATE_DISC){
+     } else if(move_ROTATE_DISC == 1 && currentPos_ROTATE_DISC > newPos_ROTATE_DISC){
     for (currentPos_ROTATE_DISC; currentPos_ROTATE_DISC >= newPos_ROTATE_DISC; currentPos_ROTATE_DISC--) {
       pwm.setPWM(ROTATE_DISC, 0, currentPos_ROTATE_DISC);
       delay(ROTATE_DISC_SPEED);
@@ -106,7 +80,17 @@ void loop() {
   }
 */
   delay(500);
-  
-  
 
 }
+
+void rotateUp(uint16_t &newPos, uint16_t &currentPos, int motor_number) {
+  for (currentPos; currentPos <= newPos; currentPos++) {
+    pwm.setPWM(motor_number, 0, currentPos);
+    delay(ROTATE_DISC_SPEED);
+    if (currentPos == newPos){
+      currentPos = newPos;
+    }
+  }
+}
+
+void rotateDown
