@@ -1,0 +1,1 @@
+Place the contents of this folder into your Arduino Library folder. I included the libraries here so they don't need to be downloaded. 
