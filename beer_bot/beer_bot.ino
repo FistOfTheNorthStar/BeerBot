@@ -1,32 +1,26 @@
 #include <Wire.h>
 #include <Adafruit_PWMServoDriver.h>
-
 Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
+#include <NewPing.h>
 
 //max pulse 4096
 //main motors for the ROBOT
 #define LOWER_MAIN_LIFT 6
 #define UPPER_MAIN_LIFT 7
-#define SERVOMIN_S3315D  140
-#define SERVOMAX_S3315D  570
 
 //servo Futada S3003, 50Hz
 #define ROTATE_DISC 15
 //int RotateDiscHz = 50;
-#define SERVOMIN_S3003 140
-#define SERVOMAX_S3003 610
+
 uint16_t currentPos_ROTATE_DISC = 375;
 uint16_t newPos_ROTATE_DISC = 375;
 // 0 for stay put, 1 rotate
 byte move_ROTATE_DISC = 0;
-#define ROTATE_DISC_SPEED 5
 
 //MG995
 #define ARM_1 11
 #define HAND_1 10
 #define OPENER 9
-#define SERVOMIN_MG995 140
-#define SERVOMAX 580
 
 int valueForAngle = 200;
 
@@ -47,14 +41,9 @@ void loop() {
  
   //disc rotating
   if(move_ROTATE_DISC == 1 && currentPos_ROTATE_DISC < newPos_ROTATE_DISC){
-     } else if(move_ROTATE_DISC == 1 && currentPos_ROTATE_DISC > newPos_ROTATE_DISC){
-    for (currentPos_ROTATE_DISC; currentPos_ROTATE_DISC >= newPos_ROTATE_DISC; currentPos_ROTATE_DISC--) {
-      pwm.setPWM(ROTATE_DISC, 0, currentPos_ROTATE_DISC);
-      delay(ROTATE_DISC_SPEED);
-      if (currentPos_ROTATE_DISC == newPos_ROTATE_DISC){
-        currentPos_ROTATE_DISC = newPos_ROTATE_DISC;
-      }
-    } 
+     
+  } else if(move_ROTATE_DISC == 1 && currentPos_ROTATE_DISC > newPos_ROTATE_DISC){
+    
   }
   
   
@@ -83,6 +72,18 @@ void loop() {
 
 }
 
+//rotate the robot motors downward
+void rotateDown(uint16_t &newPos, uint16_t &currentPos, int motor_number) {
+  for (currentPos; currentPos >= newPos; currentPos--) {
+    pwm.setPWM(motor_number, 0, currentPos);
+    delay(ROTATE_DISC_SPEED);
+    if (currentPos == newPos){
+      currentPos = newPos;
+    }
+  } 
+}
+
+//up motion
 void rotateUp(uint16_t &newPos, uint16_t &currentPos, int motor_number) {
   for (currentPos; currentPos <= newPos; currentPos++) {
     pwm.setPWM(motor_number, 0, currentPos);
@@ -93,4 +94,4 @@ void rotateUp(uint16_t &newPos, uint16_t &currentPos, int motor_number) {
   }
 }
 
-void rotateDown
+
