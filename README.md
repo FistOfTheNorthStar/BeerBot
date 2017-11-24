@@ -1,6 +1,8 @@
 # BeerBot
 A beer drinking robot project
 
+![beer bot](https://image.ibb.co/hKcGtR/24717386908_160561911c_z.jpg)
+
 ## Beginning of the project
 It is mostly building a robot arm as it is. This is still very much in progress.
 
